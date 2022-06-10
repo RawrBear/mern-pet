@@ -1,7 +1,7 @@
 version: "3.9"
 services:
     mongo:
-        container_name: "mernstackdb"
+        container_name: "mernpetappdb"
         image: mongo:5.0.8-focal
         restart: always
         ports:
