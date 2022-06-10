@@ -1,0 +1,11 @@
+{
+  "name": "mern-pet-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/RawrBear/mern-pet.git",
+  "author": "RawrBear <rawrbearmedia@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
