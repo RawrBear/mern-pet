@@ -3,11 +3,13 @@ const express = require("express");
 let db;
 
 const app = express();
+app.set("view engine", "ejs");
+app.set("views", "./views");
 
 app.get("/", async (req, res) => {
     const allAnimals = await db.collection("animals").find().toArray();
-    console.log("allAnimals", allAnimals);
-    res.send("Welcome to the home page");
+
+    res.render("home", { allAnimals });
 });
 
 app.get("/admin", (req, res) => {
