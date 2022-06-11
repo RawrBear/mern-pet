@@ -1,23 +1,34 @@
 import { createRoot } from "react-dom/client";
+import Axios from "axios";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function App() {
+    const [animals, setAnimals] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            const result = await Axios.get("/api/animals");
+            setAnimals(result.data); // result.data is the data from the server
+        }
+        fetchData();
+    }, []);
+
     return (
         <div>
-            <h1>Hello</h1>
-            <p>This is from React</p>
+            {animals.map((animal) => {
+                return (
+                    <AnimalCard name={animal.name} species={animal.species} />
+                );
+            })}
         </div>
     );
 }
 
 function AnimalCard(props) {
     return (
-        <div>
-            <p>
-                Hi, my name is {props.name} and I am a {props.species}
-            </p>
-        </div>
+        <p>
+            Hi, my name is {props.name} and I am a {props.species}
+        </p>
     );
 }
 
