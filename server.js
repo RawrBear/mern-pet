@@ -13,7 +13,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/admin", (req, res) => {
-    res.send("Welcome to the admin page");
+    res.render("admin");
 });
 
 async function start() {
