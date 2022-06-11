@@ -1,7 +1,8 @@
 import { createRoot } from "react-dom/client";
 import Axios from "axios";
-
 import React, { useEffect, useState } from "react";
+import CreateNewForm from "./components/CreateNewForm";
+import AnimalCard from "./components/AnimalCard";
 
 function App() {
     const [animals, setAnimals] = useState([]);
@@ -14,21 +15,27 @@ function App() {
     }, []);
 
     return (
-        <div>
-            {animals.map((animal) => {
-                return (
-                    <AnimalCard name={animal.name} species={animal.species} />
-                );
-            })}
-        </div>
-    );
-}
+        <div className="container">
+            <p>
+                <a href="/">&laquo; Back to public homepage</a>
+            </p>
 
-function AnimalCard(props) {
-    return (
-        <p>
-            Hi, my name is {props.name} and I am a {props.species}
-        </p>
+            <CreateNewForm setAnimals={setAnimals} />
+            <div className="animal-grid">
+                {animals.map(function (animal) {
+                    return (
+                        <AnimalCard
+                            key={animal._id}
+                            name={animal.name}
+                            species={animal.species}
+                            photo={animal.photo}
+                            id={animal._id}
+                            setAnimals={setAnimals}
+                        />
+                    );
+                })}
+            </div>
+        </div>
     );
 }
 
