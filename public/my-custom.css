@@ -1,9 +1,14 @@
+
+
 .animal-grid {
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px 30px;
+
   }
+
+  
   
   .our-card-top {
     position: relative;
