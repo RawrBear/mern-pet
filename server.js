@@ -3,7 +3,14 @@ const express = require("express");
 const multer = require("multer");
 const upload = multer();
 const sanitizeHTML = require("sanitize-html");
+
+const fse = require("fs-extra");
+const sharp = require("sharp");
 let db;
+const path = require("path");
+
+// When app launches, make sure the public/uploads folder exists
+fse.ensureDirSync(path.join("public", "uploads"));
 
 const app = express();
 app.set("view engine", "ejs");
@@ -45,6 +52,14 @@ app.post(
     upload.single("photo"),
     cleanUp,
     async (req, res) => {
+        if (req.file) {
+            const photoFilename = `${Date.now()}.jpg`;
+            await sharp(req.file.buffer)
+                .resize(844, 456)
+                .jpeg({ quality: 60 })
+                .toFile(path.join("public", "uploads", photoFilename));
+            req.cleanData.photo = photoFilename;
+        }
         console.log("Data", req.body);
         const info = await db.collection("animals").insertOne(req.cleanData);
         const newAnimal = await db
