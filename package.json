@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "run-p webpack start",
         "webpack": "webpack --watch",
-        "start": "nodemon server"
+        "start": "nodemon server-compiled"
     },
     "repository": "https://github.com/RawrBear/mern-pet.git",
     "author": "RawrBear <rawrbearmedia@gmail.com>",

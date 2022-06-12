@@ -3,11 +3,13 @@ const express = require("express");
 const multer = require("multer");
 const upload = multer();
 const sanitizeHTML = require("sanitize-html");
-
 const fse = require("fs-extra");
 const sharp = require("sharp");
 let db;
 const path = require("path");
+const React = require("react");
+const ReactDOMServer = require("react-dom/server");
+const AnimalCard = require("./src/components/AnimalCard").default;
 
 // When app launches, make sure the public/uploads folder exists
 fse.ensureDirSync(path.join("public", "uploads"));
@@ -32,8 +34,29 @@ function passwordProtected(req, res, next) {
 
 app.get("/", async (req, res) => {
     const allAnimals = await db.collection("animals").find().toArray();
-
-    res.render("home", { allAnimals });
+    const generatedHTML = ReactDOMServer.renderToString(
+        <div className="container">
+            {!allAnimals.length && (
+                <p>There are no animals yet, the admin needs to add a few.</p>
+            )}
+            <div className="animal-grid mb-3">
+                {allAnimals.map((animal) => (
+                    <AnimalCard
+                        key={animal._id}
+                        name={animal.name}
+                        species={animal.species}
+                        photo={animal.photo}
+                        id={animal._id}
+                        readOnly={true}
+                    />
+                ))}
+            </div>
+            <p>
+                <a href="/admin">Login / manage the animal listings.</a>
+            </p>
+        </div>
+    );
+    res.render("home", { generatedHTML });
 });
 
 app.use(passwordProtected);
