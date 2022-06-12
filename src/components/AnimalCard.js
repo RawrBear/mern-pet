@@ -61,7 +61,7 @@ function AnimalCard(props) {
                 <img
                     src={
                         props.photo
-                            ? `/uploaded-photos/${props.photo}`
+                            ? `/uploads/${props.photo}`
                             : "/fallback.png"
                     }
                     className="card-img-top"
